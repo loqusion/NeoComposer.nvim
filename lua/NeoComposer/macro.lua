@@ -171,6 +171,9 @@ function macro.play_macro()
   enter_normal_mode()
   vim.api.nvim_win_set_cursor(0, start_pos)
 
+  local clipboard = vim.o.clipboard
+  vim.o.clipboard = ""
+
   state.set_playing(true)
   STOP_MACRO = false
 
@@ -183,6 +186,8 @@ function macro.play_macro()
   end
 
   local success, result = pcall(loop_macro)
+
+  vim.o.clipboard = clipboard
 
   if success then
     if timer then
